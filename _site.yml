@@ -8,7 +8,7 @@ navbar:
     - text: "GitHub Repo"
       href: https://github.com/BullDF/billboard-songs-analysis-with-spotify
     - text: "Midterm Report"
-      href: https://github.com/BullDF/billboard-songs-analysis-with-spotify/blob/main/midterm_project/report.pdf
+      href: https://github.com/BullDF/billboard-songs-analysis-with-spotify/blob/main/EDA/report.pdf
     - text: 
 
   right:
