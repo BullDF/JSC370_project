@@ -1,10 +1,16 @@
-name: "JSC370 Lab 12"
+name: "JSC370 Final Project"
 output_dir: "."
 navbar:
-  title: "JSC370 Lab 12"
+  title: "JSC370 Final Project"
   left:
     - text: "Home"
       href: index.html
+    - text: "GitHub Repo"
+      href: https://github.com/BullDF/billboard-songs-analysis-with-spotify
+    - text: "Midterm Report"
+      href: https://github.com/BullDF/billboard-songs-analysis-with-spotify/blob/main/midterm_project/report.pdf
+    - text: 
+
   right:
     - icon: fa-github fa-lg
       href: https://github.com/
