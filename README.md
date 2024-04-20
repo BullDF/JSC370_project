@@ -6,4 +6,4 @@ Welcome to my JSC370 project on analyzing songs with the Spotify API 🎵. This 
 
 To use the Spotify API, I wrote a program importing the [Spotipy Python package](https://spotipy.readthedocs.io/en/2.22.1/?highlight=start#). The Python program can be found in the [`spot.py`](https://github.com/BullDF/billboard-songs-analysis-with-spotify/blob/main/data/spot.py) file in this repository. **To use this file, a file named `config.py` needs to be created locally that contains a `CLIENT_ID` and a `CLIENT_SECRET`, which can be obtained from the [Spotify web API](https://developer.spotify.com/documentation/web-api) website.**
 
-The data exploration report can be found in [`report.pdf`](https://github.com/BullDF/billboard-songs-analysis-with-spotify/blob/main/midterm_project/report.pdf). More statistical inferences and models are to be done in the future.
+The data exploration report can be found in [`report.pdf`](https://github.com/BullDF/billboard-songs-analysis-with-spotify/blob/main/EDA/report.pdf). More statistical inferences and models are to be done in the future.
