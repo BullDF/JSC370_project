@@ -30,15 +30,15 @@ library(gridExtra)
 ```
 
 ```{r eval=FALSE}
-setwd("/Users/bulldf/University of Toronto/JSC370_project")
+setwd("/Users/bulldf/University of Toronto/JSC370_project/midterm_project")
 style_file("report.Rmd")
 ```
 
 ```{r}
 # Read in data
-tracks <- read.csv("tracks.csv")
-track_artists <- read.csv("track_artists.csv")
-artists <- read.csv("artists.csv")
+tracks <- read.csv("../data/tracks.csv")
+track_artists <- read.csv("../data/track_artists.csv")
+artists <- read.csv("../data/artists.csv")
 ```
 
 ```{r}

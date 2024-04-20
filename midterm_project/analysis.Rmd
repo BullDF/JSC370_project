@@ -17,11 +17,15 @@ library(tm)
 library(gridExtra)
 ```
 
+```{r}
+setwd("/Users/bulldf/University of Toronto/JSC370_project/midterm_project")
+```
+
 Read in data:
 ```{r}
-tracks <- read.csv("tracks.csv")
-track_artists <- read.csv("track_artists.csv")
-artists <- read.csv("artists.csv")
+tracks <- read.csv("../data/tracks.csv")
+track_artists <- read.csv("../data/track_artists.csv")
+artists <- read.csv("../data/artists.csv")
 
 head(tracks)
 head(track_artists)
