@@ -1,0 +1,15 @@
+name: "JSC370 Lab 12"
+output_dir: "."
+navbar:
+  title: "JSC370 Lab 12"
+  left:
+    - text: "Home"
+      href: index.html
+  right:
+    - icon: fa-github fa-lg
+      href: https://github.com/
+    - text: "JSC370 Home"
+      href: https://jsc370.github.io/JSC370-2024/
+output:
+  html_document:
+    theme: cosmo
