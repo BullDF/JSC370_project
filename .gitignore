@@ -1,6 +1,5 @@
 config.py
 __pycache__/
-.idea/
 .cache
 demo/
 .DS_Store
