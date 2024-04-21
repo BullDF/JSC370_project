@@ -7,3 +7,5 @@ midterm.pdf
 final.pdf
 .Rproj.user
 .Rhistory
+*_cache/
+*_files/
