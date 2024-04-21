@@ -1,7 +1,6 @@
 ---
 title: Billboard Hot Songs Analysis with Spotify
-output: 
-  html_document
+output: html_document
 ---
 
 ```{r echo=FALSE}

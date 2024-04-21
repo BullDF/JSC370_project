@@ -3,6 +3,8 @@ title: Exploratory Data Analysis
 output: html_document
 ---
 
+This page shows some plots created for exploratory purposes. The plots are interactive so you can hover over to see more specific information. Click [here](https://github.com/BullDF/billboard-songs-analysis-with-spotify/blob/main/EDA/report.pdf) for a written EDA report with analysis.
+
 ```{r echo=FALSE}
 knitr::opts_chunk$set(
   echo = FALSE,
