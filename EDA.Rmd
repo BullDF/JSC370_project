@@ -1,0 +1,83 @@
+---
+title: Exploratory Data Analysis
+output: html_document
+---
+
+```{r echo=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE,
+  cache = TRUE
+)
+```
+
+```{r}
+library(plotly)
+```
+
+```{r}
+source("data_wrangling.R")
+```
+
+```{r}
+p <- tracks |>
+  count(mode) |>
+  ggplot(aes(
+    x = mode,
+    y = n,
+    fill = mode
+  )) +
+  geom_col() +
+  labs(
+    x = "Mode",
+    y = "Frequency"
+  ) +
+  ggtitle("Counts of Major vs. Minor Tracks") +
+  theme_classic() +
+  theme(legend.position = "none")
+ggplotly(p, tooltip = "n")
+```
+
+```{r include=TRUE, fig.align="center"}
+p <- no_stopwords_top_20 |>
+  rename(n = word_freq) |>
+  ggplot(aes(
+    x = reorder(word, n),
+    y = n,
+    fill = word
+  )) +
+  geom_col() +
+  labs(
+    x = "Word",
+    y = "Frequency"
+  ) +
+  ggtitle("Top 20 Words in Track Names (Stopwords Removed)") +
+  theme_classic() +
+  theme(legend.position = "none") +
+  coord_flip()
+ggplotly(p, tooltip = "n")
+```
+
+```{r}
+p <- tracks_with_artists |>
+  group_by(artist_name) |>
+  summarize(n = n()) |>
+  arrange(desc(n)) |>
+  head(20) |>
+  ggplot(aes(
+    x = reorder(artist_name, n),
+    y = n,
+    fill = artist_name
+  )) +
+  geom_col() +
+  coord_flip() +
+  labs(
+    x = "Artist",
+    y = "Frequency"
+  ) +
+  ggtitle("Counts of Artists on Billboard") +
+  theme_classic() +
+  theme(legend.position = "none")
+ggplotly(p, tooltip = "n")
+```

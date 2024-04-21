@@ -1,15 +1,14 @@
-name: "JSC370 Final Project"
+name: "Billboard Songs Analysis"
 output_dir: "."
 navbar:
-  title: "JSC370 Final Project"
+  title: "Billboard Songs Analysis"
   left:
     - text: "Home"
       href: index.html
     - text: "GitHub Repo"
       href: https://github.com/BullDF/billboard-songs-analysis-with-spotify
-    - text: "Midterm Report"
-      href: https://github.com/BullDF/billboard-songs-analysis-with-spotify/blob/main/EDA/report.pdf
-    - text: 
+    - text: "EDA"
+      href: EDA.html
 
   right:
     - icon: fa-github fa-lg

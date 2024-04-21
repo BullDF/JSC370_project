@@ -1,10 +1,7 @@
 ---
-title: JSC370 Lab 12
-author: Yuwei (Johnny) Meng
+title: Billboard Hot Songs Analysis with Spotify
 output: 
-  html_document:
-    toc: TRUE
-    toc_float: TRUE
+  html_document
 ---
 
 ```{r echo=FALSE}
@@ -17,5 +14,3 @@ knitr::opts_chunk$set(
 ```
 
 This is my JSC370 final project.
-
-Test. Test. Test
