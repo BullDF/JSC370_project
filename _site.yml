@@ -3,18 +3,18 @@ output_dir: "."
 navbar:
   title: "Billboard Songs Analysis"
   left:
-    - text: "Home"
-      href: index.html
-    - text: "GitHub Repo"
-      href: https://github.com/BullDF/billboard-songs-analysis-with-spotify
+    - text: "About"
+      href: about.html
     - text: "EDA"
       href: EDA.html
 
   right:
+    - text: "GitHub Repo"
+      href: https://github.com/BullDF/billboard-songs-analysis-with-spotify
+    - text: "Acknowledgements"
+      href: acknowledgements.html
     - icon: fa-github fa-lg
       href: https://github.com/
-    - text: "JSC370 Home"
-      href: https://jsc370.github.io/JSC370-2024/
 output:
   html_document:
     theme: cosmo
