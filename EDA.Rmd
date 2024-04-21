@@ -41,7 +41,7 @@ p <- tracks |>
 ggplotly(p, tooltip = "n")
 ```
 
-```{r include=TRUE, fig.align="center"}
+```{r}
 p <- no_stopwords_top_20 |>
   rename(n = word_freq) |>
   ggplot(aes(
