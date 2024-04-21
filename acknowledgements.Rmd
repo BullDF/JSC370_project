@@ -1,0 +1,8 @@
+---
+title: Acknowledgements
+output: html_document
+---
+
+This website is created as a final deliverable for JSC370 2024 Winter at the University of Toronto. Here I would like to express my sincere gratitude to [Dr. Meredith Franklin](https://meredithfranklin.github.io/) in the Department of Statistical Sciences at the University of Toronto for her valuable suggestions and comments towards completing this project.
+
+© Copyright 2024 Johnny Meng
