@@ -83,3 +83,82 @@ p <- tracks_with_artists |>
   theme(legend.position = "none")
 ggplotly(p, tooltip = "n")
 ```
+
+```{r}
+p <- tracks |>
+  ggplot(aes(x = popularity)) +
+  geom_histogram(
+    binwidth = 2,
+    fill = "light blue",
+    col = "black"
+  ) +
+  theme_classic() +
+  labs(
+    x = "Popularity",
+    y = "Frequency"
+  ) +
+  ggtitle("Distribution of Popularity with Density")
+ggplotly(p)
+```
+
+```{r}
+p <- tracks |>
+  ggplot(aes(x = year)) +
+  geom_histogram(
+    binwidth = 1,
+    color = "black",
+    fill = "pink"
+  ) +
+  theme_classic() +
+  labs(
+    x = "Year",
+    y = "Frequency"
+  ) +
+  ggtitle("Distribution of Tracks over Time")
+ggplotly(p)
+```
+
+```{r}
+p <- tracks |>
+  ggplot(aes(x = valence)) +
+  geom_histogram(
+    binwidth = 2,
+    color = "black",
+    fill = "yellow"
+  ) +
+  theme_classic() +
+  labs(
+    x = "Year",
+    y = "Frequency"
+  ) +
+  ggtitle("Distribution of Valence")
+ggplotly(p)
+```
+
+```{r}
+p <- tracks |>
+  ggplot(aes(x = year, y = popularity)) +
+  geom_point() +
+  geom_smooth(method = lm, se = FALSE, color = "orange") +
+  labs(
+    x = "Year",
+    y = "Popularity"
+  ) +
+  ggtitle("Popularity vs. Time") +
+  theme_classic()
+ggplotly(p)
+```
+
+```{r}
+p <- tracks |>
+  ggplot(aes(x = year, y = energy)) +
+  geom_point() +
+  geom_smooth(method = lm, se = FALSE, color = "maroon") +
+  labs(
+    x = "Year",
+    y = "Energy"
+  ) +
+  ggtitle("Energy vs. Time") +
+  theme_classic()
+ggplotly(p)
+```
