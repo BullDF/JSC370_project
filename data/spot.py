@@ -7,6 +7,7 @@ from data_structs import *
 from utils import read_data
 from tqdm import tqdm
 import time
+from typing import Optional, Tuple
 
 client_credentials_manager = SpotifyClientCredentials(CLIENT_ID, CLIENT_SECRET)
 sp = spotipy.Spotify(auth_manager=client_credentials_manager)
