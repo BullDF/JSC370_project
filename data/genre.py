@@ -12,7 +12,6 @@ sp = spotipy.Spotify(auth_manager=client_credentials_manager)
 GENRES = ['rap', 'hip', 'classic', 'soul', 'country', 'pop', 'rock', 'other']
 
 def get_genre(genres: List[str]) -> str:
-    global g
     for genre in genres:
         genre = word_tokenize(genre.lower())
         for w in genre:
