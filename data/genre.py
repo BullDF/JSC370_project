@@ -2,7 +2,7 @@ import pandas as pd
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 from config import CLIENT_ID, CLIENT_SECRET
-from tqdm import tqdm
+
 from typing import List
 from nltk import word_tokenize
 
