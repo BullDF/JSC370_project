@@ -1,0 +1,28 @@
+
+```{r}
+setwd("/Users/bulldf/University of Toronto/JSC370_project/ml_analysis")
+library(randomForest)
+library(httr)
+```
+
+```{r}
+source("data_wrangling.R")
+```
+
+```{r}
+head(tracks)
+```
+
+```{r}
+track_ranks <- merge(
+  x = tracks,
+  y = billboard_songs,
+  by.x = "name",
+  by.y = "song",
+  all.x = FALSE,
+  all.y = FALSE
+)
+nrow(tracks)
+nrow(track_ranks)
+head(track_ranks)
+```
