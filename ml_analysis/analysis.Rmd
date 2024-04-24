@@ -1,8 +1,9 @@
 
 ```{r}
 setwd("/Users/bulldf/University of Toronto/JSC370_project/ml_analysis")
-library(randomForest)
-library(httr)
+library(lubridate)
+library(rpart)
+library(rpart.plot)
 ```
 
 ```{r}
@@ -10,19 +11,94 @@ source("data_wrangling.R")
 ```
 
 ```{r}
+head(artists_with_genres)
+head(track_artists)
 head(tracks)
 ```
 
 ```{r}
-track_ranks <- merge(
+tracks_with_genres <- merge(
   x = tracks,
-  y = billboard_songs,
-  by.x = "name",
-  by.y = "song",
-  all.x = FALSE,
-  all.y = FALSE
+  y = track_artists,
+  by.x = "id",
+  by.y = "track_id",
+) |>
+  merge(
+    y = artists_with_genres,
+    by.x = "artist_id",
+    by.y = "id"
+  ) |>
+  rename(track_name = name.x, artist_name = name.y, track_id = id) |>
+  unique() |>
+  mutate(mode = as.factor(mode), genre = as.factor(genre)) |>
+  mutate(duration_min = minute(duration), duration_sec = second(duration)) |>
+  select(-artist_name, -track_name, -track_id, -artist_id, -duration)
+str(tracks_with_genres)
+head(tracks_with_genres)
+nrow(tracks_with_genres)
+```
+
+```{r}
+set.seed(527)
+n <- nrow(tracks_with_genres)
+train_indices <- sample(seq_len(n), size = round(n * 0.8))
+train_data <- tracks_with_genres[train_indices, ]
+test_data <- tracks_with_genres[-train_indices, ]
+head(train_data)
+head(test_data)
+nrow(train_data)
+nrow(test_data)
+```
+
+1. Fitting a decision tree:
+
+```{r}
+set.seed(118)
+tree <- rpart(
+  formula = as.factor(genre) ~ .,
+  data = train_data,
+  method = "class",
+  minsplit = 10,
+  minbucket = 3,
+  cp = 0,
+  xval = 10
 )
-nrow(tracks)
-nrow(track_ranks)
-head(track_ranks)
+```
+
+```{r}
+printcp(tree)
+optimal_cp <- tree$cptable |>
+  as.data.frame() |>
+  slice_min(order_by = xerror, n = 1) |>
+  select(CP) |>
+  pull()
+optimal_cp
+```
+
+```{r}
+tree_pr <- prune(tree, cp = optimal_cp)
+```
+
+```{r}
+pred <- predict(tree_pr, test_data)
+col_indices <- pred |> apply(c(1), which.max)
+head(pred)
+head(col_indices)
+sum(col_indices == as.numeric(test_data$genre))
+```
+
+```{r}
+head(train_indices)
+train_indices <- train_indices - 1
+head(train_indices)
+
+head(col_indices)
+col_indices <- col_indices - 1
+head(col_indices)
+```
+
+```{r}
+write.csv(tracks_with_genres, file = "tracks_with_genres.csv", row.names = FALSE)
+write.csv(train_indices, file = "train_indices.csv", row.names = FALSE)
+write.csv(col_indices, file = "tree_pred.csv", row.names = FALSE)
 ```
