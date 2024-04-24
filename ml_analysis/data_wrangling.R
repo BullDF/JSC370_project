@@ -1,10 +1,9 @@
 
 library(tidyverse)
 
-tracks <- read.csv("../data/tracks.csv")
-track_artists <- read.csv("../data/track_artists.csv")
-artists <- read.csv("../data/artists.csv")
-billboard_songs <- read.csv("../data/billboard_hot_songs.csv")
+tracks <- read.csv("https://raw.githubusercontent.com/BullDF/billboard-songs-analysis-with-spotify/main/data/tracks.csv")
+track_artists <- read.csv("https://raw.githubusercontent.com/BullDF/billboard-songs-analysis-with-spotify/main/data/track_artists.csv")
+artists_with_genres <- read.csv("https://raw.githubusercontent.com/BullDF/billboard-songs-analysis-with-spotify/main/data/artists_with_genres.csv")
 
 tracks <- tracks |>
   mutate(
