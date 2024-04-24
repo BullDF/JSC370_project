@@ -1,13 +1,12 @@
 
 ```{r}
-setwd("/Users/bulldf/University of Toronto/JSC370_project/ml_analysis")
 library(lubridate)
 library(rpart)
 library(rpart.plot)
 ```
 
 ```{r}
-source("data_wrangling.R")
+source("https://raw.githubusercontent.com/BullDF/billboard-songs-analysis-with-spotify/main/ml_analysis/data_wrangling.R")
 ```
 
 ```{r}
