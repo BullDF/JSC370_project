@@ -53,38 +53,38 @@ nrow(test_data)
 1. Fitting a decision tree:
 
 ```{r}
-set.seed(118)
-tree <- rpart(
-  formula = as.factor(genre) ~ .,
-  data = train_data,
-  method = "class",
-  minsplit = 10,
-  minbucket = 3,
-  cp = 0,
-  xval = 10
-)
+# set.seed(118)
+# tree <- rpart(
+#   formula = as.factor(genre) ~ .,
+#   data = train_data,
+#   method = "class",
+#   minsplit = 10,
+#   minbucket = 3,
+#   cp = 0,
+#   xval = 10
+# )
 ```
 
 ```{r}
-printcp(tree)
-optimal_cp <- tree$cptable |>
-  as.data.frame() |>
-  slice_min(order_by = xerror, n = 1) |>
-  select(CP) |>
-  pull()
-optimal_cp
+# printcp(tree)
+# optimal_cp <- tree$cptable |>
+#   as.data.frame() |>
+#   slice_min(order_by = xerror, n = 1) |>
+#   select(CP) |>
+#   pull()
+# optimal_cp
 ```
 
 ```{r}
-tree_pr <- prune(tree, cp = optimal_cp)
+# tree_pr <- prune(tree, cp = optimal_cp)
 ```
 
 ```{r}
-pred <- predict(tree_pr, test_data)
-col_indices <- pred |> apply(c(1), which.max)
-head(pred)
-head(col_indices)
-sum(col_indices == as.numeric(test_data$genre))
+# pred <- predict(tree_pr, test_data)
+# col_indices <- pred |> apply(c(1), which.max)
+# head(pred)
+# head(col_indices)
+# sum(col_indices == as.numeric(test_data$genre))
 ```
 
 ```{r}
@@ -92,13 +92,13 @@ head(train_indices)
 train_indices <- train_indices - 1
 head(train_indices)
 
-head(col_indices)
-col_indices <- col_indices - 1
-head(col_indices)
+# head(col_indices)
+# col_indices <- col_indices - 1
+# head(col_indices)
 ```
 
 ```{r}
 write.csv(tracks_with_genres, file = "tracks_with_genres.csv", row.names = FALSE)
 write.csv(train_indices, file = "train_indices.csv", row.names = FALSE)
-write.csv(col_indices, file = "tree_pred.csv", row.names = FALSE)
+# write.csv(col_indices, file = "tree_pred.csv", row.names = FALSE)
 ```
