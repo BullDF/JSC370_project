@@ -81,11 +81,16 @@ def train(num_epochs: int=50,
     torch.save(model.state_dict(), 'nn.pth')
 
 def test():
+    train_data = np.load('train_data.npy')
+    train_label = np.load('train_label.npy')
+    train_dataset = GenreDataset(train_data, train_label)
+
     test_data = np.load('test_data.npy')
     test_label = np.load('test_label.npy')
     test_dataset = GenreDataset(test_data, test_label)
     model = NN(num_features, num_classes)
     model.load_state_dict(torch.load('nn.pth'))
+    print(f'Training acc: {eval(model, train_dataset)}')
     print(f'Testing acc: {eval(model, test_dataset)}')
 
 
