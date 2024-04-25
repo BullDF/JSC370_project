@@ -9,3 +9,4 @@ final.pdf
 .Rhistory
 *_cache/
 *_files/
+*.synctex.gz
