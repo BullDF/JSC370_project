@@ -128,7 +128,7 @@ p <- tracks |>
   ) +
   theme_classic() +
   labs(
-    x = "Year",
+    x = "Valence",
     y = "Frequency"
   ) +
   ggtitle("Distribution of Valence")
