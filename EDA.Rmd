@@ -19,7 +19,7 @@ library(plotly)
 ```
 
 ```{r}
-source("data_wrangling.R")
+source("https://raw.githubusercontent.com/BullDF/billboard-songs-analysis-with-spotify/website/data_wrangling.R")
 ```
 
 ```{r}
@@ -161,4 +161,20 @@ p <- tracks |>
   ggtitle("Energy vs. Time") +
   theme_classic()
 ggplotly(p)
+```
+
+```{r}
+tracks_with_genres <- read.csv("https://raw.githubusercontent.com/BullDF/billboard-songs-analysis-with-spotify/main/data/ml_analysis/tracks_with_genres.csv")
+```
+
+```{r}
+p <- tracks_with_genres |>
+  count(genre) |>
+  ggplot(aes(x = reorder(genre, -n), y = n, fill = genre)) +
+  geom_col() +
+  theme_classic() +
+  theme(legend.position = "none") +
+  ggtitle("Count of Music Genres") +
+  labs(x = "Genre", y = "Frequency")
+ggplotly(p, tooltip = "n")
 ```
