@@ -16,11 +16,17 @@ knitr::opts_chunk$set(
 
 ```{r}
 library(plotly)
+library(lubridate)
 ```
 
 ```{r}
 source("https://raw.githubusercontent.com/BullDF/billboard-songs-analysis-with-spotify/website/data_wrangling.R")
+tracks_with_genres <- read.csv("https://raw.githubusercontent.com/BullDF/billboard-songs-analysis-with-spotify/main/data/ml_analysis/tracks_with_genres.csv")
 ```
+
+## Bar Charts for Features {.tabset}
+
+### Modes
 
 ```{r}
 p <- tracks |>
@@ -35,11 +41,13 @@ p <- tracks |>
     x = "Mode",
     y = "Frequency"
   ) +
-  ggtitle("Counts of Major vs. Minor Tracks") +
+  ggtitle("Count of Major vs. Minor Tracks") +
   theme_classic() +
   theme(legend.position = "none")
 ggplotly(p, tooltip = "n")
 ```
+
+### Top Words in Track Names
 
 ```{r}
 p <- no_stopwords_top_20 |>
@@ -61,6 +69,8 @@ p <- no_stopwords_top_20 |>
 ggplotly(p, tooltip = "n")
 ```
 
+### Artists
+
 ```{r}
 p <- tracks_with_artists |>
   group_by(artist_name) |>
@@ -78,94 +88,13 @@ p <- tracks_with_artists |>
     x = "Artist",
     y = "Frequency"
   ) +
-  ggtitle("Counts of Artists on Billboard") +
+  ggtitle("Count of Artists on Billboard") +
   theme_classic() +
   theme(legend.position = "none")
 ggplotly(p, tooltip = "n")
 ```
 
-```{r}
-p <- tracks |>
-  ggplot(aes(x = popularity)) +
-  geom_histogram(
-    binwidth = 2,
-    fill = "light blue",
-    col = "black"
-  ) +
-  theme_classic() +
-  labs(
-    x = "Popularity",
-    y = "Frequency"
-  ) +
-  ggtitle("Distribution of Popularity with Density")
-ggplotly(p)
-```
-
-```{r}
-p <- tracks |>
-  ggplot(aes(x = year)) +
-  geom_histogram(
-    binwidth = 1,
-    color = "black",
-    fill = "pink"
-  ) +
-  theme_classic() +
-  labs(
-    x = "Year",
-    y = "Frequency"
-  ) +
-  ggtitle("Distribution of Tracks over Time")
-ggplotly(p)
-```
-
-```{r}
-p <- tracks |>
-  ggplot(aes(x = valence)) +
-  geom_histogram(
-    binwidth = 2,
-    color = "black",
-    fill = "yellow"
-  ) +
-  theme_classic() +
-  labs(
-    x = "Valence",
-    y = "Frequency"
-  ) +
-  ggtitle("Distribution of Valence")
-ggplotly(p)
-```
-
-```{r}
-p <- tracks |>
-  ggplot(aes(x = year, y = popularity)) +
-  geom_point() +
-  geom_smooth(method = lm, se = FALSE, color = "orange") +
-  labs(
-    x = "Year",
-    y = "Popularity"
-  ) +
-  ggtitle("Popularity vs. Time") +
-  theme_classic()
-ggplotly(p)
-```
-
-```{r}
-p <- tracks |>
-  ggplot(aes(x = year, y = energy)) +
-  geom_point() +
-  geom_smooth(method = lm, se = FALSE, color = "maroon") +
-  labs(
-    x = "Year",
-    y = "Energy"
-  ) +
-  ggtitle("Energy vs. Time") +
-  theme_classic()
-ggplotly(p)
-```
-
-```{r}
-tracks_with_genres <- read.csv("https://raw.githubusercontent.com/BullDF/billboard-songs-analysis-with-spotify/main/data/ml_analysis/tracks_with_genres.csv")
-```
+### Music Genres
 
 ```{r}
 p <- tracks_with_genres |>
@@ -177,4 +106,377 @@ p <- tracks_with_genres |>
   ggtitle("Count of Music Genres") +
   labs(x = "Genre", y = "Frequency")
 ggplotly(p, tooltip = "n")
+```
+
+## Histograms for Features {.tabset}
+
+### Year
+
+```{r}
+p <- tracks |>
+  ggplot(aes(x = year)) +
+  geom_histogram(
+    binwidth = 1,
+    color = "black",
+    fill = "#FF0000"
+  ) +
+  theme_classic() +
+  labs(
+    x = "Year",
+    y = "Frequency"
+  ) +
+  ggtitle("Distribution of Tracks over Time")
+ggplotly(p)
+```
+
+### Acousticness
+
+```{r}
+p <- tracks |>
+  ggplot(aes(x = acousticness)) +
+  geom_histogram(
+    binwidth = 2,
+    color = "black",
+    fill = "#0000FF"
+  ) +
+  theme_classic() +
+  labs(
+    x = "Acousticness",
+    y = "Frequency"
+  ) +
+  ggtitle("Distribution of Acousticness")
+ggplotly(p)
+```
+
+### Danceability
+
+```{r}
+p <- tracks |>
+  ggplot(aes(x = danceability)) +
+  geom_histogram(
+    binwidth = 2,
+    color = "black",
+    fill = "#00FF00"
+  ) +
+  theme_classic() +
+  labs(
+    x = "Danceability",
+    y = "Frequency"
+  ) +
+  ggtitle("Distribution of Danceability")
+ggplotly(p)
+```
+
+### Energy
+
+```{r}
+p <- tracks |>
+  ggplot(aes(x = energy)) +
+  geom_histogram(
+    binwidth = 2,
+    color = "black",
+    fill = "#008080"
+  ) +
+  theme_classic() +
+  labs(
+    x = "Energy",
+    y = "Frequency"
+  ) +
+  ggtitle("Distribution of Energy")
+ggplotly(p)
+```
+
+### Instrumentalness
+
+```{r}
+p <- tracks |>
+  ggplot(aes(x = instrumentalness)) +
+  geom_histogram(
+    binwidth = 2,
+    color = "black",
+    fill = "#FFFF00"
+  ) +
+  theme_classic() +
+  labs(
+    x = "Instrumentalness",
+    y = "Frequency"
+  ) +
+  ggtitle("Distribution of Instrumentalness")
+ggplotly(p)
+```
+
+### Liveness
+
+```{r}
+p <- tracks |>
+  ggplot(aes(x = liveness)) +
+  geom_histogram(
+    binwidth = 2,
+    color = "black",
+    fill = "#800080"
+  ) +
+  theme_classic() +
+  labs(
+    x = "Liveness",
+    y = "Frequency"
+  ) +
+  ggtitle("Distribution of Liveness")
+ggplotly(p)
+```
+
+### Loudness
+
+```{r}
+p <- tracks |>
+  ggplot(aes(x = loudness)) +
+  geom_histogram(
+    binwidth = 1,
+    color = "black",
+    fill = "#FFA500"
+  ) +
+  theme_classic() +
+  labs(
+    x = "Loudness",
+    y = "Frequency"
+  ) +
+  ggtitle("Distribution of Loudness")
+ggplotly(p)
+```
+
+### Speechiness
+
+```{r}
+p <- tracks |>
+  ggplot(aes(x = speechiness)) +
+  geom_histogram(
+    binwidth = 2,
+    color = "black",
+    fill = "#FFC0CB"
+  ) +
+  theme_classic() +
+  labs(
+    x = "Speechiness",
+    y = "Frequency"
+  ) +
+  ggtitle("Distribution of Speechiness")
+ggplotly(p)
+```
+
+### Valence
+
+```{r}
+p <- tracks |>
+  ggplot(aes(x = valence)) +
+  geom_histogram(
+    binwidth = 2,
+    color = "black",
+    fill = "#A52A2A"
+  ) +
+  theme_classic() +
+  labs(
+    x = "Valence",
+    y = "Frequency"
+  ) +
+  ggtitle("Distribution of Valence")
+ggplotly(p)
+```
+
+### Popularity
+
+```{r}
+p <- tracks |>
+  ggplot(aes(x = popularity)) +
+  geom_histogram(
+    binwidth = 2,
+    color = "black",
+    fill = "#00FFFF"
+  ) +
+  theme_classic() +
+  labs(
+    x = "Popularity",
+    y = "Frequency"
+  ) +
+  ggtitle("Distribution of Popularity")
+ggplotly(p)
+```
+
+### Duration
+
+```{r}
+p <- tracks |>
+  ggplot(aes(x = minute(duration) * 60 + second(duration))) +
+  geom_histogram(
+    binwidth = 40,
+    color = "black",
+    fill = "#FF00FF"
+  ) +
+  theme_classic() +
+  labs(
+    x = "Duration (sec)",
+    y = "Frequency"
+  ) +
+  ggtitle("Distribution of Duration in Seconds")
+ggplotly(p)
+```
+
+## Scatterplots for Features vs. Time {.tabset}
+
+### Acousticness
+
+```{r}
+p <- tracks |>
+  ggplot(aes(x = year, y = acousticness)) +
+  geom_point() +
+  geom_smooth(method = lm, se = FALSE, color = "#FF0000") +
+  labs(
+    x = "Year",
+    y = "Acousticness"
+  ) +
+  ggtitle("Acousticness vs. Time") +
+  theme_classic()
+ggplotly(p)
+```
+
+### Danceability
+
+```{r}
+p <- tracks |>
+  ggplot(aes(x = year, y = danceability)) +
+  geom_point() +
+  geom_smooth(method = lm, se = FALSE, color = "#0000FF") +
+  labs(
+    x = "Year",
+    y = "Danceability"
+  ) +
+  ggtitle("Danceability vs. Time") +
+  theme_classic()
+ggplotly(p)
+```
+
+### Energy
+
+```{r}
+p <- tracks |>
+  ggplot(aes(x = year, y = energy)) +
+  geom_point() +
+  geom_smooth(method = lm, se = FALSE, color = "#00FF00") +
+  labs(
+    x = "Year",
+    y = "Energy"
+  ) +
+  ggtitle("Energy vs. Time") +
+  theme_classic()
+ggplotly(p)
+```
+
+### Instrumentalness
+
+```{r}
+p <- tracks |>
+  ggplot(aes(x = year, y = instrumentalness)) +
+  geom_point() +
+  geom_smooth(method = lm, se = FALSE, color = "#FFFF00") +
+  labs(
+    x = "Year",
+    y = "Instrumentalness"
+  ) +
+  ggtitle("Instrumentalness vs. Time") +
+  theme_classic()
+ggplotly(p)
+```
+
+### Liveness
+
+```{r}
+p <- tracks |>
+  ggplot(aes(x = year, y = liveness)) +
+  geom_point() +
+  geom_smooth(method = lm, se = FALSE, color = "#800080") +
+  labs(
+    x = "Year",
+    y = "Liveness"
+  ) +
+  ggtitle("Liveness vs. Time") +
+  theme_classic()
+ggplotly(p)
+```
+
+### Loudness
+
+```{r}
+p <- tracks |>
+  ggplot(aes(x = year, y = loudness)) +
+  geom_point() +
+  geom_smooth(method = lm, se = FALSE, color = "#FFA500") +
+  labs(
+    x = "Year",
+    y = "Loudness"
+  ) +
+  ggtitle("Loudness vs. Time") +
+  theme_classic()
+ggplotly(p)
+```
+
+### Speechiness
+
+```{r}
+p <- tracks |>
+  ggplot(aes(x = year, y = speechiness)) +
+  geom_point() +
+  geom_smooth(method = lm, se = FALSE, color = "#FFC0CB") +
+  labs(
+    x = "Year",
+    y = "Speechiness"
+  ) +
+  ggtitle("Speechiness vs. Time") +
+  theme_classic()
+ggplotly(p)
+```
+
+### Valence
+
+```{r}
+p <- tracks |>
+  ggplot(aes(x = year, y = valence)) +
+  geom_point() +
+  geom_smooth(method = lm, se = FALSE, color = "#A52A2A") +
+  labs(
+    x = "Year",
+    y = "Valence"
+  ) +
+  ggtitle("Valence vs. Time") +
+  theme_classic()
+ggplotly(p)
+```
+
+### Popularity
+
+```{r}
+p <- tracks |>
+  ggplot(aes(x = year, y = popularity)) +
+  geom_point() +
+  geom_smooth(method = lm, se = FALSE, color = "#00FFFF") +
+  labs(
+    x = "Year",
+    y = "Popularity"
+  ) +
+  ggtitle("Popularity vs. Time") +
+  theme_classic()
+ggplotly(p)
+```
+
+### Duration
+
+```{r}
+p <- tracks |>
+  ggplot(aes(x = year, y = minute(duration) * 60 + second(duration))) +
+  geom_point() +
+  geom_smooth(method = lm, se = FALSE, color = "#FF00FF") +
+  labs(
+    x = "Year",
+    y = "Duration (sec)"
+  ) +
+  ggtitle("Duration in Seconds vs. Time") +
+  theme_classic()
+ggplotly(p)
 ```
