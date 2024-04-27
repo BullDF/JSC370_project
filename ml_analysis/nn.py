@@ -38,6 +38,24 @@ class NN(nn.Module):
         logits = self.model(x)
         return logits
     
+class NN_no_dropout(nn.Module):
+    def __init__(self, num_features, num_classes) -> None:
+        super(NN_no_dropout, self).__init__()
+        self.model = nn.Sequential(nn.BatchNorm1d(num_features),
+                                   nn.Linear(num_features, 64),
+                                   nn.BatchNorm1d(64),
+                                   nn.ReLU(),
+                                   nn.Linear(64, 128),
+                                   nn.BatchNorm1d(128),
+                                   nn.ReLU(),
+                                   nn.Linear(128, 128),
+                                   nn.BatchNorm1d(128),
+                                   nn.ReLU(),
+                                   nn.Linear(128, num_classes))
+    def forward(self, x):
+        logits = self.model(x)
+        return logits
+
 def eval(model: nn.Module, dataset: GenreDataset) -> float:
     dataloader = DataLoader(dataset, batch_size=1024)
     model.eval()
@@ -50,14 +68,18 @@ def eval(model: nn.Module, dataset: GenreDataset) -> float:
         total += len(data)
     return correct / total
 
-def train(num_epochs: int=50,
+def train(dropout: bool=True,
+          num_epochs: int=50,
           lr: float=0.001,
           batch_size: int=128):
     
     train_data = np.load('train_data.npy')
     train_label = np.load('train_label.npy')
     train_dataset = GenreDataset(train_data, train_label)
-    model = NN(num_features, num_classes)
+    if dropout:
+        model = NN(num_features, num_classes)
+    else:
+        model = NN_no_dropout(num_features, num_classes)
     
     model.train()
     criterion = nn.CrossEntropyLoss()
@@ -78,9 +100,12 @@ def train(num_epochs: int=50,
         print(f'Epoch {i}: Training acc: {eval(model, train_dataset)}')
         model.train()
 
-    torch.save(model.state_dict(), 'nn.pth')
+    if dropout:
+        torch.save(model.state_dict(), 'nn.pth')
+    else:
+        torch.save(model.state_dict(), 'nn_no_dropout.pth')
 
-def test():
+def test(dropout: bool=True):
     train_data = np.load('train_data.npy')
     train_label = np.load('train_label.npy')
     train_dataset = GenreDataset(train_data, train_label)
@@ -88,15 +113,22 @@ def test():
     test_data = np.load('test_data.npy')
     test_label = np.load('test_label.npy')
     test_dataset = GenreDataset(test_data, test_label)
-    model = NN(num_features, num_classes)
-    model.load_state_dict(torch.load('nn.pth'))
+    if dropout:
+        model = NN(num_features, num_classes)
+        model.load_state_dict(torch.load('nn.pth'))
+    else:
+        model = NN_no_dropout(num_features, num_classes)
+        model.load_state_dict(torch.load('nn_no_dropout.pth'))
     print(f'Training acc: {eval(model, train_dataset)}')
     print(f'Testing acc: {eval(model, test_dataset)}')
 
 
 def main() -> None:
     # train()
-    test()
+    # test()
+
+    train(dropout=False)
+    test(dropout=False)
     
     pass
     
