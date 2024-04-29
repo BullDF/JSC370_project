@@ -5,4 +5,14 @@ output: html_document
 
 This website is created as a final deliverable for JSC370 2024 Winter at the University of Toronto. Here I would like to express my sincere gratitude to [Dr. Meredith Franklin](https://meredithfranklin.github.io/) in the Department of Statistical Sciences at the University of Toronto for her valuable suggestions and comments towards completing this project.
 
+## References
+
+- [Billboard "The Hot 100" Songs](https://www.kaggle.com/datasets/dhruvildave/billboard-the-hot-100-songs)
+- [Spotify Web API Documentation](https://developer.spotify.com/documentation/web-api)
+- [Spotipy Python Library Documentation](https://spotipy.readthedocs.io/en/2.22.1/)
+- Python Package Documentations:
+  - [`PyTorch`](https://pytorch.org/docs/stable/torch.html)
+  - [`scikit-learn`](https://scikit-learn.org/stable/index.html)
+  - [`XGBoost`](https://xgboost.readthedocs.io/en/stable/python/python_intro.html)
+
 © Copyright 2024 Johnny Meng
