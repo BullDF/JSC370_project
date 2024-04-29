@@ -7,12 +7,16 @@ navbar:
       href: about.html
     - text: "EDA"
       href: EDA.html
+    - text: ML Analysis
+      href: ml_analysis.html
 
   right:
-    - text: "GitHub Repo"
-      href: https://github.com/BullDF/billboard-songs-analysis-with-spotify
+    - text: Appendices
+      href: appendices.html
     - text: "Acknowledgements"
       href: acknowledgements.html
+    - text: "GitHub Repo"
+      href: https://github.com/BullDF/billboard-songs-analysis-with-spotify
     - icon: fa-github fa-lg
       href: https://github.com/
 output:

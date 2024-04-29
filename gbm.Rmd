@@ -1,0 +1,6 @@
+---
+title: Gradient Boosting
+output: html_document
+---
+
+Gradient boosting uses the boosting ensemble method. As opposed to random forest, which uses bagging to build multiple trees and outputs the averaged results, gradient boosting trains another model on the data that the previous model predicted wrong, so that the ensemble can capture nuances in the training data. From the model performance table, overfitting seems to be an issue for the default gradient boosting, since the training accuracy was a lot higher than the test accuracy, but the CV gradient boosting improved on this. Nevertheless, the CV gradient boosting also decreased in test accuracy. The supposed explanation will be discussed in the following XGBoost section.

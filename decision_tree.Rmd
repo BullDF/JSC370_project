@@ -1,0 +1,6 @@
+---
+title: Decision Tree
+output: html_document
+---
+
+From the model performance table, we noticed that the training accuracy for the default decision tree was very high, but the test accuracy was the poorest among all the models. This was not surprising since decision tree is notorious in overfitting and not robust to small variations in the data. With cross-validation, the training accuracy dropped down to 0.487, which did help in reducing overfitting, but the test accuracy didn't increase too much. Overall, decision tree is undoubtedly a simple model overall, with only few assumptions and hence it is normal that decision tree did not perform too well, even with cross-validation.

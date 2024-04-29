@@ -1,0 +1,6 @@
+---
+title: Extreme Gradient Boosting
+output: html_document
+---
+
+XGBoost is basically a gradient boosting model but with more regularization terms to reduce overfitting. However, overfitting was still a problem in the XGBoost model with a learning rate of `eta` = 0.1. For the XGBoost with `eta` = 0.001, overfitting was reduced but the accuracy decreased as well. From this analysis and the previous gradient boosting section, we can summarize that in the current classification task, we should favor large learning rates over small ones since the XGBoost with a larger learning rate outperformed its counterpart on both the training and test sets. For gradient boosting, the set of learning rates that I experimented with in the cross-validation was also smaller than the default learning rate, leading to poor performance even with cross-validation.

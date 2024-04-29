@@ -1,0 +1,44 @@
+---
+title: Machine Learning Analysis
+output:
+  html_document:
+    toc: TRUE
+    toc_float: TRUE
+---
+
+## Model Architectures
+
+In this project, the classification task was to use the audio features of tracks to classify the music genres of artists. Multiple types of machine learning models were constructed. The table below shows the model architectures and hyperparameters. Models suffixed as *Default*  were fitted using the default hyperparameters defined in *scikit-learn* and models suffixed as *CV* were fitted through \(k\)-fold cross-validation.
+
+| Model | Hyperparameters |
+|-------|-----------------|
+| Decision Tree Default | [Default](https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html#sklearn.tree.DecisionTreeClassifier) |
+| Decision Tree CV | - `max_depth`: [10, 20, 30, 40, 50]<br>- `min_samples_split`: [2, 6, 10, 14]<br>- `ccp_alpha`: 10 values from 0.001 to 0.01 on the log scale |
+| Random Forest Default | [Default](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html#sklearn-ensemble-randomforestclassifier) |
+| Random Forest CV | - `max_depth`: [10, 20, 30, 40, 50]<br>- `min_samples_split`: [2, 6, 10, 14]<br>- `ccp_alpha`: 10 values from 0.001 to 0.01 on the log scale |
+| Gradient Boosting Default | [Default](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingClassifier.html#sklearn-ensemble-gradientboostingclassifier) |
+| Gradient Boosting CV | - `learning_rate`: 10 values from 0.001 to 0.01 on the log scale |
+| XGBoost | - [Default](https://xgboost.readthedocs.io/en/stable/parameter.html)<br>- `objective`: `multi:softmax`<br>- `num_class`: 8<br>- Optionally with `eta` = 0.001
+| Neural Network | - 3 linear layers of shapes [`num_features`, 64], [64, 128], and [128, 128], and an output layer of shape [128, `num_classes`]<br>- ReLU activation function in every linear layer<br>- Optimizer: `Adam`<br>- Loss function: `CrossEntropyLoss`<br>- Number of epochs: 50<br>- Learning rate: 0.001<br>- Batch size: 128<br>- Optionally with dropout
+
+Table: Model Architectures & Hyperparameters
+
+## Model Performance
+
+The following table shows the training accuracy and test accuracy of all the trained models. Click on the name of a model to see a detailed analysis of that model.
+
+| Model | Training Accuracy | Test Accuracy |
+|-------|-------------------|---------------|
+| [Decision Tree Default](decision_tree.html) | 0.971 | 0.356 |
+| [Decision Tree CV](decision_tree.html) | 0.487 | 0.440 |
+| [**Random Forest Default**](rf.html) | **0.971** | **0.505** |
+| [Random Forest CV](rf.html) | 0.804 | 0.473 |
+| [Gradient Boosting Default](gbm.html) | 0.739 | 0.488 |
+| [Gradient Boosting CV](gbm.html) | 0.509 | 0.436 |
+| [XGBoost with `eta` = 0.1](xgb.html) | 0.750 | 0.482 |
+| [XGBoost with `eta` = 0.001](xgb.html) | 0.596 | 0.443 |
+| [Gaussian Naive Bayes](gaussian_nb.html) | 0.358 | 0.372 |
+| [Neural Network without Dropout](nn.html) | 0.861 | 0.442 |
+| [Neural Network with Dropout](nn.html) | 0.551 | 0.486 |
+
+Table: Model Performance

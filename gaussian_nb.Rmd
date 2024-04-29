@@ -1,0 +1,8 @@
+---
+title: Gaussian Naive Bayes
+output: html_document
+---
+
+The Gaussian NB model was actually the model that I expected to have the best performance among all. Being a probabilistic model, Gaussian NB assumes the input features are conditionally independent Gaussian random variables given the class labels. With a prior distribution, Gaussian NB computes the likelihood of an input vector in each of the classes and chooses the maximum as the prediction via Bayes' Rule. Considering the prior belief that each music genre has its unique characteristics, a probabilistic model should be capable of capturing the underlying pattern in the audio features of tracks.
+
+One caveat that explains the poor performance of the Gaussian NB model is that, as we have seen in the EDA, not all input features strictly follow a Gaussian distribution. For instance, the *year* column is uniformly distributed and the *speechiness* audio feature (and some others) is strongly skewed. The *mode* attribute also follows a Bernoulli distribution, failing to satisfy the assumptions for Gaussian NB. To ameliorate the assumptions, a log transformation is helpful in turning the skewed audio features into a Gaussian distribution.

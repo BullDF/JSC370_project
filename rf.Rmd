@@ -1,0 +1,8 @@
+---
+title: Random Forest
+output: html_document
+---
+
+Among all the trained models, the default random forest achieved the highest test accuracy of 0.505, predicting half of the test data correctly. The CV random forest also performed well. As an improvement to decision tree, random forest makes an ensemble of trees and averages the prediction output to reduce variance, which mitigates overfitting to the training data.
+
+Something surprising to note is that the CV random forest was worse than the default random forest, since we expected cross-validation finds the best hyperparameters while reducing overfitting. Nevertheless, from the results we observe that both the default and the CV random forests were overfitting to the training data to a large extent since the training accuracy and the test counterpart greatly differed. Hence it is not unreasonable to attribute the high test accuracy for the default random forest to the randomness within the model architecture. Furthermore, in the default random forest, the `max_depth` parameter was not set so that the model tried to fit the data until there was impunity. On the contrary, I specified a range of maximum depth values for cross-validation to search over in the CV random forest. Hence it is possible that the `max_depth` values I set were not enough for the model to achieve great performance.
