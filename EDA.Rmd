@@ -1,6 +1,9 @@
 ---
 title: Exploratory Data Analysis
-output: html_document
+output:
+  html_document:
+    toc: TRUE
+    toc_float: TRUE
 ---
 
 This page shows some plots created for exploratory purposes. The plots are interactive so you can hover over to see more specific information. Click [here](https://github.com/BullDF/billboard-songs-analysis-with-spotify/blob/main/EDA/report.pdf) for a written EDA report with analysis.
