@@ -29,6 +29,9 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -221,6 +224,69 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -228,6 +294,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -250,13 +326,19 @@ $(document).ready(function () {
 <li>
   <a href="EDA.html">EDA</a>
 </li>
+<li>
+  <a href="ml_analysis.html">ML Analysis</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/BullDF/billboard-songs-analysis-with-spotify">GitHub Repo</a>
+  <a href="appendices.html">Appendices</a>
 </li>
 <li>
   <a href="acknowledgements.html">Acknowledgements</a>
+</li>
+<li>
+  <a href="https://github.com/BullDF/billboard-songs-analysis-with-spotify">GitHub Repo</a>
 </li>
 <li>
   <a href="https://github.com/">
@@ -278,32 +360,80 @@ $(document).ready(function () {
 </div>
 
 
-<p>Welcome to my project on analyzing songs with the Spotify API 🎵.
-This project borrowed <a
-href="https://www.kaggle.com/datasets/dhruvildave/billboard-the-hot-100-songs">this
-dataset on the hot 100 songs on Billboard</a> from Kaggle as an entry
-point. From here, I randomly sampled 5000 songs and used the Spotify API
-to extract these songs from Spotify along with their audio features and
-popularity. Click to read more about the <a
-href="https://developer.spotify.com/documentation/web-api">Spotify web
-API</a>.</p>
-<p>To use the Spotify API, I wrote a program importing the <a
-href="https://spotipy.readthedocs.io/en/2.22.1/?highlight=start#">Spotipy
-Python library</a>. The Python program can be found in the <a
-href="https://github.com/BullDF/billboard-songs-analysis-with-spotify/blob/main/data/spot.py"><code>spot.py</code></a>
-file in the GitHub repository. <strong>To use this file, a file named
-<code>config.py</code> needs to be created locally that contains a
-<code>CLIENT_ID</code> and a <code>CLIENT_SECRET</code>, which can be
-obtained from the <a
-href="https://developer.spotify.com/documentation/web-api">Spotify web
-API</a> website.</strong></p>
-<p>The data exploration report can be found <a
-href="https://github.com/BullDF/billboard-songs-analysis-with-spotify/blob/main/EDA/report.pdf">here</a>.
-More statistical inferences and models are to be done.</p>
-<p>– by Johnny Meng</p>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>Music, as a human culture, takes a large part in people’s life for
+long. In the current era where technology thrives, countless digital
+musical softwares emerge, granting listeners with access to music at
+anytime, anywhere in the world. Concurrently emerged is the booming
+development of various music genres, each with its unique musical
+characteristics. Therefore, classifying music genres is an interesting
+research topic because, for one reason, a successful classification
+model can give insight into building a song recommendation system.</p>
+<p>As an entry point to the project, a dataset on the “Hot 100”
+Billboard songs every week starting from 1958 is downloaded from Kaggle.
+The dataset contains 330087 rows and 7 columns that include information
+about the date of the song on Billboard, the name, the artist(s), and
+the rank on Billboard. In this project, only the name and the artist(s)
+columns are used.</p>
+<p>Among the leading musical softwares, Spotify is a world-changing one.
+Founded in 2006 in Sweden, Spotify gradually attracted more and more
+users and built up a massive repository of worldwide music. Of this
+reason, a major portion of the data utilized in this data analysis
+project is obtained from Spotify through the Spotify web API and deemed
+credible and reliable. This portion of data contains the name of tracks,
+the artist(s), the track popularity, some audio features (see <a
+href="appendices.html">appendix A</a> for full list) and in particular,
+a genre of music that the artist performs.</p>
+<p>This project aims to use the aforementioned information extracted
+from Spotify to build and compare multiple machine learning models for
+the sake of classifying music genres. The models are mainly evaluated
+through classification accuracy score.</p>
+</div>
+<div id="methodology" class="section level2">
+<h2>Methodology</h2>
+<p>The Billboard hot songs dataset from Kaggle is used as a reference.
+Starting with this list of 330087 tracks, to prevent overloading the
+Spotify API and keep the data at a manageable size, I randomly sampled
+5000 tracks for the remaining analysis. Then I used the Spotify web API
+via the <code>Spotipy</code> Python library to access these songs on
+Spotify and extracted the audio features and popularity for these 5000
+tracks. Given that some of these tracks are unavailable on Spotify, I
+obtained a dataset of 3823 tracks with their corresponding audio
+features. To obtain the labels, I selected 7 famous music genres (see <a
+href="appendices.html">appendix B</a>). The Spotify API was then used to
+extract the music genre that the artists perform. If the music genre for
+an artist is not on the list, then the artist was marked as
+<em>other</em>. For analysis, I merged the information into a single
+dataset with all the audio features and the genres of the tracks and
+split the dataset into a training set and a test set using an 80:20
+ratio. All data wrangling steps were completed in R.</p>
+<p>For the classification task, I constructed multiple machine learning
+models on the training set and evaluated them on the test set. These
+models included decision tree, random forest, gradient boosting, extreme
+gradient boosting (XGBoost), Gaussian Naive Bayes (GaussianNB), and
+neural network. The model construction and evaluation process was
+completed entirely in Python. The decision tree, random forest, gradient
+boosting, and GaussianNB models were constructed using the
+<code>scikit-learn</code> package. For some models, I ran a <span
+class="math inline">\(k\)</span>-fold cross-validation to search over a
+reasonable set of hyperparameters (see the model architectures &amp;
+hyperparameters table in the <a href="ml_analysis.html">ML Analysis</a>
+page). The XGBoost model was built using the <code>XGBoost</code>
+package. For comparison, I constructed two XGBoost models with different
+hyperparameters. The neural network featured 3 fully-connected layers
+and an output layer, implemented using the <code>PyTorch</code>
+framework. Batch normalization and dropout layers were included. The
+ReLU function was applied as activation throughout the model and the
+cross-entropy loss was used for the optimization task. Upon
+construction, all models were evaluated on the test dataset using
+accuracy score.</p>
+</div>
 
 
 
+</div>
+</div>
 
 </div>
 
@@ -336,6 +466,35 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

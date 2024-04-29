@@ -1,12 +1,23 @@
 ---
 title: About
-output: html_document
+output:
+  html_document:
+    toc: TRUE
+    toc_float: TRUE
 ---
 
-Welcome to my project on analyzing songs with the Spotify API 🎵. This project borrowed [this dataset on the hot 100 songs on Billboard](https://www.kaggle.com/datasets/dhruvildave/billboard-the-hot-100-songs) from Kaggle as an entry point. From here, I randomly sampled 5000 songs and used the Spotify API to extract these songs from Spotify along with their audio features and popularity. Click to read more about the [Spotify web API](https://developer.spotify.com/documentation/web-api).
+## Introduction
 
-To use the Spotify API, I wrote a program importing the [Spotipy Python library](https://spotipy.readthedocs.io/en/2.22.1/?highlight=start#). The Python program can be found in the [`spot.py`](https://github.com/BullDF/billboard-songs-analysis-with-spotify/blob/main/data/spot.py) file in the GitHub repository. **To use this file, a file named `config.py` needs to be created locally that contains a `CLIENT_ID` and a `CLIENT_SECRET`, which can be obtained from the [Spotify web API](https://developer.spotify.com/documentation/web-api) website.**
+Music, as a human culture, takes a large part in people's life for long. In the current era where technology thrives, countless digital musical softwares emerge, granting listeners with access to music at anytime, anywhere in the world. Concurrently emerged is the booming development of various music genres, each with its unique musical characteristics. Therefore, classifying music genres is an interesting research topic because, for one reason, a successful classification model can give insight into building a song recommendation system.
 
-The data exploration report can be found [here](https://github.com/BullDF/billboard-songs-analysis-with-spotify/blob/main/EDA/report.pdf). More statistical inferences and models are to be done.
+As an entry point to the project, a dataset on the "Hot 100" Billboard songs every week starting from 1958 is downloaded from Kaggle. The dataset contains 330087 rows and 7 columns that include information about the date of the song on Billboard, the name, the artist(s), and the rank on Billboard. In this project, only the name and the artist(s) columns are used.
 
--- by Johnny Meng
+Among the leading musical softwares, Spotify is a world-changing one. Founded in 2006 in Sweden, Spotify gradually attracted more and more users and built up a massive repository of worldwide music. Of this reason, a major portion of the data utilized in this data analysis project is obtained from Spotify through the Spotify web API and deemed credible and reliable. This portion of data contains the name of tracks, the artist(s), the track popularity, some audio features (see [appendix A](appendices.html) for full list) and in particular, a genre of music that the artist performs.
+
+This project aims to use the aforementioned information extracted from Spotify to build and compare multiple machine learning models for the sake of classifying music genres. The models are mainly evaluated through classification accuracy score.
+
+## Methodology
+
+The Billboard hot songs dataset from Kaggle is used as a reference. Starting with this list of 330087 tracks, to prevent overloading the Spotify API and keep the data at a manageable size, I randomly sampled 5000 tracks for the remaining analysis. Then I used the Spotify web API via the `Spotipy` Python library to access these songs on Spotify and extracted the audio features and popularity for these 5000 tracks. Given that some of these tracks are unavailable on Spotify, I obtained a dataset of 3823 tracks with their corresponding audio features. To obtain the labels, I selected 7 famous music genres (see [appendix B](appendices.html)). The Spotify API was then used to extract the music genre that the artists perform. If the music genre for an artist is not on the list, then the artist was marked as *other*. For analysis, I merged the information into a single dataset with all the audio features and the genres of the tracks and split the dataset into a training set and a test set using an 80:20 ratio. All data wrangling steps were completed in R.
+
+For the classification task, I constructed multiple machine learning models on the training set and evaluated them on the test set. These models included decision tree, random forest, gradient boosting, extreme gradient boosting (XGBoost), Gaussian Naive Bayes (GaussianNB), and neural network. The model construction and evaluation process was completed entirely in Python. The decision tree, random forest, gradient boosting, and GaussianNB models were constructed using the `scikit-learn` package. For some models, I ran a \(k\)-fold cross-validation to search over a reasonable set of hyperparameters (see the model architectures & hyperparameters table in the [ML Analysis](ml_analysis.html) page). The XGBoost model was built using the `XGBoost` package. For comparison, I constructed two XGBoost models with different hyperparameters. The neural network featured 3 fully-connected layers and an output layer, implemented using the `PyTorch` framework. Batch normalization and dropout layers were included. The ReLU function was applied as activation throughout the model and the cross-entropy loss was used for the optimization task. Upon construction, all models were evaluated on the test dataset using accuracy score.
