@@ -26,6 +26,8 @@
 
 \href{https://bulldf.github.io/billboard-songs-analysis-with-spotify/}{\textbf{Project Website}}
 
+\href{https://play.library.utoronto.ca/watch/c4d71902f00f5e6fe91bea00974fce6c}{\textbf{Project Presentation}}
+
 \section{Introduction}
 
 Music, as a human culture, takes a large part in people's life for long. In the current era where technology thrives, countless digital musical softwares emerge, granting listeners with access to music at anytime, anywhere in the world. Concurrently emerged is the booming development of various music genres, each with its unique musical characteristics. Therefore, classifying music genres is an interesting research topic because, for one reason, a successful classification model can give insight into building a song recommendation system.
@@ -34,13 +36,13 @@ As an entry point to the project, a dataset on the ``Hot 100'' Billboard songs e
 
 Among the leading musical softwares, Spotify is a world-changing one. Founded in 2006 in Sweden, Spotify gradually attracted more and more users and built up a massive repository of worldwide music. Of this reason, a major portion of the data utilized in this data analysis project is obtained from Spotify through the Spotify web API and deemed credible and reliable. This portion of data contains the name of tracks, the artist(s), the track popularity, some audio features (see \hyperref[sec:audio_features]{appendix A} for full list) and in particular, a genre of music that the artist performs.
 
-This project aims to use the aforementioned information extracted from Spotify to build and compare multiple machine learning models for the sake of classifying music genres. The models are mainly evaluated through classification accuracy score.
+This project aims to use the aforementioned information extracted from Spotify to build and compare multiple machine learning models for the sake of classifying music genres. The models are evaluated through classification accuracy score.
 
 \section{Methodology}
 
-The Billboard hot songs dataset from Kaggle is used as a reference. Starting with this list of 330087 tracks, to prevent overloading the Spotify API and keep the data at a manageable size, I randomly sampled 5000 tracks for the remaining analysis. Then I used the Spotify web API via the \texttt{Spotipy} Python library to access these songs on Spotify and extracted the audio features and popularity for these 5000 tracks. Given that some of these tracks are unavailable on Spotify, I obtained a dataset of 3823 tracks with their corresponding audio features. To obtain the labels, I selected 7 famous music genres (see \hyperref[sec:select_music_genres]{appendix B}). The Spotify API was then used to extract the music genre that the artists perform. If the music genre for an artist is not on the list, then the artist was marked as \textit{other}. For analysis, I merged the information into a single dataset with all the audio features and the genres of the tracks and split the dataset into a training set and a test set using an 80:20 ratio. All data wrangling steps were completed in R.
+The Billboard hot songs dataset from Kaggle is used as a reference. Starting with this list of 330087 tracks, to prevent overloading the Spotify API and keep the data at a manageable size, I randomly sampled 5000 tracks for the remaining analysis. Then I used the Spotify web API via the \texttt{Spotipy} Python library to access these songs on Spotify and extracted the audio features and popularity for these 5000 tracks. Given that some of these tracks are unavailable on Spotify, I eventually obtained a dataset of 3823 tracks with their corresponding audio features. To get the labels, I selected 7 famous music genres (see \hyperref[sec:select_music_genres]{appendix B}). The Spotify API was then used to extract the music genre that the artists perform. If the music genre for an artist is not on the list, then the artist was marked as \textit{other}. For analysis, I merged the information into a single dataset with all the audio features and the genres of the tracks and split the dataset into a training set and a test set using an 80:20 ratio. All data wrangling steps were completed in R.
 
-For the classification task, I constructed multiple machine learning models on the training set and evaluated them on the test set. These models included decision tree, random forest, gradient boosting, extreme gradient boosting (XGBoost), Gaussian Naive Bayes (GaussianNB), and neural network. The model construction and evaluation process was completed entirely in Python. The decision tree, random forest, gradient boosting, and GaussianNB models were constructed using the \texttt{scikit-learn} package. For some models, I ran a \(k\)-fold cross-validation to search over a reasonable set of hyperparameters (see \hyperref[sec:hyperparameters]{appendix C}). The XGBoost model was built using the \texttt{XGBoost} package. For comparison, I constructed two XGBoost models with different hyperparameters. The neural network featured 3 fully-connected layers and an output layer, implemented using the \texttt{PyTorch} framework. Batch normalization and dropout layers were included. The ReLU function was applied as activation throughout the model and the cross-entropy loss was used for the optimization task. Upon construction, all models were evaluated on the test dataset using accuracy score.
+For the classification task, I constructed multiple machine learning models on the training set and evaluated them on the test set. These models included decision tree, random forest, gradient boosting, extreme gradient boosting (XGBoost), Gaussian Naive Bayes (GaussianNB), and neural network. The model construction and evaluation process was completed entirely in Python. The decision tree, random forest, gradient boosting, and GaussianNB models were constructed using the \texttt{scikit-learn} package. For some models, I ran a \(k\)-fold cross-validation to search over a set of hyperparameters (see \hyperref[sec:hyperparameters]{appendix C}). The XGBoost model was built using the \texttt{XGBoost} package. For comparison, I constructed two XGBoost models with different hyperparameters. The neural network featured 3 fully-connected layers and an output layer, implemented using the \texttt{PyTorch} framework. Batch normalization and dropout layers were included. The ReLU function was applied as activation throughout the model and the cross-entropy loss was used for the optimization task. Upon construction, all models were evaluated on the test dataset using accuracy score.
 
 \section{Exploratory Data Analysis}
 
@@ -84,7 +86,7 @@ From the plot, we can see that the number of tracks in each music genre is very 
     \label{tab:model_performance}
 \end{table}
 
-From \autoref*{tab:model_performance}, we notice that the default random forest achieved the highest test accuracy of 0.505. The CV random forest, the default gradient boosting, and the neural network also achieved comparable test accuracy. As expected, the default decision tree and the Gaussian Naive Bayes had the lowest test accuracy since these models were relatively simple or required Gaussian assumptions that weren't true.
+From \autoref*{tab:model_performance}, we notice that the default random forest achieved the highest test accuracy of 0.505. The CV random forest, the default gradient boosting, the XGBoost model with \(\eta=0.1\), and the neural network also achieved comparable test accuracy. In contrast, the default decision tree and the Gaussian Naive Bayes had the lowest test accuracy.
 
 We can use the default random forest and plot its feature importance. For comparison, the feature importance plot for the default decision tree is also plotted.
 
@@ -105,7 +107,7 @@ We can use the default random forest and plot its feature importance. For compar
     \label{fig:var_imp}
 \end{figure}
 
-From \autoref*{fig:var_imp}, we observe that the default random forest and the default decision tree agreed that \textit{year}, \textit{popularity}, \textit{speechiness}, \textit{danceability}, and \textit{acousticness} were the 5 most important features in the dataset in classifying the music genres. Additionally, \textit{mode}, \textit{duration}, and \textit{instrumentalness} were the least important features. This result might not be a coincidence and thus is explored further in the following section.
+From \autoref*{fig:var_imp}, we observe that the default random forest and the default decision tree agreed that \textit{year}, \textit{popularity}, \textit{speechiness}, \textit{danceability}, and \textit{acousticness} were the 5 most important features in the dataset in classifying the music genres. Additionally, \textit{mode}, \textit{duration}, and \textit{instrumentalness} were the least important features. This result might not be a coincidence and is explored further in the following section.
 
 \section{Discussion}
 
@@ -113,7 +115,7 @@ The previous section provided an overview of the machine learning models trained
 
 \subsection{Decision Tree}
 
-From \autoref{tab:model_performance}, we noticed that the training accuracy for the default decision tree was very high, but the test accuracy was the poorest among all the models. This was not surprising since decision tree is notorious in overfitting and not robust to small variations in the data. With cross-validation, the training accuracy dropped down to 0.487, which did help in reducing overfitting, but the test accuracy didn't increase too much. Overall, decision tree is undoubtedly a simple model overall, with only few assumptions and hence it is normal that decision tree did not perform too well, even with cross-validation.
+From \autoref{tab:model_performance}, we noticed that the training accuracy for the default decision tree was very high, but the test accuracy was the poorest among all the models. This was not surprising since decision tree is notorious in overfitting and not robust to small variations in the data. With cross-validation, the training accuracy dropped down to 0.487, which did help in reducing overfitting, but the test accuracy didn't increase too much. Overall, decision tree is undoubtedly a simple model with only few assumptions and hence it is normal that decision tree did not perform too well, even with cross-validation.
 
 \subsection{Random Forest}
 
@@ -123,7 +125,7 @@ Something surprising to note is that the CV random forest was worse than the def
 
 \subsection{Gradient Boosting}
 
-Gradient boosting uses the boosting ensemble method. As opposed to random forest, which uses bagging to build multiple trees and outputs the averaged results, gradient boosting trains another model on the data that the previous model predicted wrong, so that the ensemble can capture nuances in the training data. From \autoref{tab:model_performance}, overfitting seems to be an issue for the default gradient boosting, since the training accuracy was a lot higher than the test accuracy, but the CV gradient boosting improved on this. Nevertheless, the CV gradient boosting also decreased in test accuracy. The supposed explanation will be discussed in the following XGBoost section.
+Gradient boosting uses the boosting ensemble method. As opposed to random forest, which uses bagging to build multiple trees and outputs the averaged results, gradient boosting trains another model on the data that the previous model predicted wrong, so that the ensemble can capture nuances in the training data. From \autoref{tab:model_performance}, overfitting seems to be an issue for the default gradient boosting, since the training accuracy was a lot higher than the test accuracy, but the CV gradient boosting improved on this. Nevertheless, the CV gradient boosting also decreased in test accuracy. The supposed explanation will be presented in the following XGBoost section.
 
 \subsection{XGBoost}
 
@@ -133,7 +135,7 @@ XGBoost is basically a gradient boosting model but with more regularization term
 
 The Gaussian NB model was actually the model that I expected to have the best performance among all. Being a probabilistic model, Gaussian NB assumes the input features are conditionally independent Gaussian random variables given the class labels. With a prior distribution, Gaussian NB computes the likelihood of an input vector in each of the classes and chooses the maximum as the prediction via Bayes' Rule. Considering the prior belief that each music genre has its unique characteristics, a probabilistic model should be capable of capturing the underlying pattern in the audio features of tracks.
 
-One caveat that explains the poor performance of the Gaussian NB model is that, as we have seen in the EDA, not all input features strictly follow a Gaussian distribution. For instance, the \textit{year} column is uniformly distributed and the \textit{speechiness} audio feature (and some others) is strongly skewed. The \textit{mode} attribute also follows a Bernoulli distribution, failing to satisfy the assumptions for Gaussian NB. To ameliorate the assumptions, a log transformation is helpful in turning the skewed audio features into a Gaussian distribution.
+One caveat that explains the poor performance of the Gaussian NB model is that, as we have seen in the \href{https://bulldf.github.io/billboard-songs-analysis-with-spotify/EDA.html}{EDA}, not all input features strictly follow a Gaussian distribution. For instance, the \textit{year} column is uniformly distributed and the \textit{speechiness} audio feature (and some others) is strongly skewed. The \textit{mode} attribute also follows a Bernoulli distribution, failing to satisfy the assumptions for Gaussian NB. To ameliorate the assumptions, a log transformation is helpful in turning the skewed audio features into a Gaussian distribution.
 
 \subsection{Neural Network}
 
